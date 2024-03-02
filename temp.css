@@ -4,8 +4,14 @@
 }
 @media (max-width: 600px) {
   #temp_size {
-    padding: 2px;
     width: 98%;
     height: 99%;
+  }
+  .project_in_two_group {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }
