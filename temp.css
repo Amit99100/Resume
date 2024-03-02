@@ -1,4 +1,11 @@
-#temp_size{
-    width: 70%;
-    height: 80%;
+#temp_size {
+  width: 70%;
+  height: 80%;
+}
+@media (max-width: 600px) {
+  #temp_size {
+    padding: 2px;
+    width: 98%;
+    height: 99%;
+  }
 }
