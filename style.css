@@ -8,9 +8,7 @@ ul,
 li {
   margin: 0;
   padding: 0;
-  background-color: rgb(255, 255, 255);
   font-family: Georgia, "Times New Roman", Times, serif;
-  color: black;
 }
 
 /* Profile section
@@ -25,7 +23,7 @@ li {
 }
 
 #profile_container img {
-  border-radius: 50%;
+  border-radius: 0px;
 }
 
 #profile_container img:hover {
@@ -54,7 +52,6 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none;
-  color: black;
 }
 
 section {
@@ -216,7 +213,7 @@ git hubb log  */
   border-radius: 8px; /* Rounded corners */
   margin: 1rem;
   padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  box-shadow: 0 4px 8px rgba(80, 8, 212, 0.1); /* Shadow effect */
 }
 
 .resume-item h3 {
