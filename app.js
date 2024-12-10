@@ -24,3 +24,8 @@ function gotoWeb4() {
     const link = document.getElementsByClassName("websitelink");
     location.href = "https://namasteconnect.onrender.com/";
 }
+function gotoWeb5() {
+
+    const link = document.getElementsByClassName("websitelink");
+    location.href = "https://knowyourinfluencer.com/";
+}
