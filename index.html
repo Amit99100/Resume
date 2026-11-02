@@ -1,168 +1,669 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="slider.css"> -->
-    <link rel="stylesheet" href="Button.css">
-    <link rel="stylesheet" href="floating.css">
-    <link rel="stylesheet" href="projects.css">
-    <link rel="stylesheet" href="background.css">
-    <link rel="stylesheet" href="temp.css">
-
-    <title>Amit Maurya </title>
+    <title>Amit Maurya | Full-Stack & Distributed Systems Engineer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            950: '#090d16',
+                            900: '#0f172a',
+                            850: '#131c31',
+                            800: '#1e293b'
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                            500: '#f59e0b'
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981'
+                        },
+                        cyan: {
+                            400: '#38bdf8',
+                            500: '#06b6d4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        body {
+            background-color: #090d16;
+            color: #cbd5e1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.01em;
+        }
+
+        .subtle-border {
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .subtle-border-hover:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .card-bg {
+            background: linear-gradient(180deg, rgba(19, 28, 49, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%);
+            backdrop-filter: blur(12px);
+        }
+
+        .grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Custom Toast Notification */
+        #toast {
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
     </style>
 </head>
+<body class="grid-pattern min-h-screen text-slate-300 antialiased selection:bg-cyan-500/20 selection:text-cyan-300">
 
-<!-- body section -->
+<!-- Toast Notification -->
+<div id="toast" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 border border-cyan-500/30 text-slate-100 shadow-2xl text-xs font-mono">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toast-message">Email address copied to clipboard!</span>
+</div>
 
-<body>
-    <header>
-        <nav>
+<!-- Navigation Header -->
+<header class="fixed top-0 left-0 right-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-white/5 px-4 sm:px-8 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3 group">
+            <div class="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-mono text-cyan-400 font-semibold text-sm group-hover:border-cyan-500/50 transition-colors">
+                AM
+            </div>
+            <div>
+                <div class="text-sm font-bold text-slate-100 leading-tight">Amit Maurya</div>
+                <div class="text-[11px] font-mono text-slate-400">Software Engineer • IIT Bhubaneswar</div>
+            </div>
+        </a>
 
-            <ul>
-                <!-- <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li> -->
-                <li><a href="#projects">Projects</a></li>
-
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+        <!-- Desktop Links -->
+        <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-slate-400">
+            <a href="#about" class="hover:text-slate-100 transition-colors">About</a>
+            <a href="#impact" class="hover:text-slate-100 transition-colors">Engineering Impact</a>
+            <a href="#experience" class="hover:text-slate-100 transition-colors">Experience</a>
+            <a href="#projects" class="hover:text-slate-100 transition-colors">Projects</a>
+            <a href="#skills" class="hover:text-slate-100 transition-colors">Stack</a>
         </nav>
 
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+            <button onclick="copyToClipboard('amitmaurya.career@gmail.com', 'Email copied!')" class="px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-mono subtle-border transition-all flex items-center gap-2">
+                <i class="fa-regular fa-copy text-slate-400"></i>
+                <span>Copy Email</span>
+            </button>
+            <a href="mailto:amitmaurya.career@gmail.com" class="px-3.5 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-semibold text-xs hover:bg-cyan-400 transition-all">
+                Get in Touch
+            </a>
+        </div>
+    </div>
+</header>
 
+<!-- Main Content Container -->
+<main class="max-w-6xl mx-auto px-4 sm:px-8 pt-32 pb-24 space-y-24">
 
-    </header>
+    <!-- HERO SECTION -->
+    <section id="about" class="pt-6 sm:pt-12 space-y-8">
+        <!-- Availability Pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Product Development Engineer I @ Phenom People</span>
+        </div>
 
-    <section id="profile_container">
-        <div><img src="./Images/profile_image.png" alt="" height="21%" width="21%"> </div>
-        <h1>Hey, I'm Amit Maurya. <img src="./Images/hand.png" alt="" height="4%" width="4%"> </h1>
-        <p> I'm passionate about building web applications using technologies like React and Node.js.
-        </p>
-        <p>
-            With experience in full-stack development, I enjoy turning ideas into functional, user-friendly solutions.
-        </p>
+        <!-- Headline -->
+        <div class="space-y-4 max-w-4xl">
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-100 tracking-tight leading-[1.15]">
+                Building enterprise-scale microservices, optimizing database performance, & engineering reliable backend systems.
+            </h1>
 
+            <!-- Quote from request -->
+            <blockquote class="text-base sm:text-lg text-slate-300 font-normal italic border-l-2 border-cyan-500/60 pl-4 py-1">
+                "With experience in full-stack development, I enjoy turning ideas into functional, user-friendly solutions."
+            </blockquote>
+
+            <p class="text-sm sm:text-base text-slate-400 font-normal leading-relaxed max-w-3xl pt-2">
+                Backend & Full-Stack Engineer with an M.Tech / B.Tech Dual Degree from <strong class="text-slate-200 font-semibold">IIT Bhubaneswar ('25)</strong>.
+                Specialized in <strong class="text-slate-200 font-semibold">Java 17, Spring Boot, MongoDB Aggregations, Kafka Streaming</strong>, multi-tenant isolation, and high-concurrency microservice architectures serving global enterprises.
+            </p>
+        </div>
+
+        <!-- REAL VERIFIED LINKS BAR -->
+        <div class="flex flex-wrap items-center gap-3 pt-2 font-mono text-xs">
+            <a href="https://www.linkedin.com/in/amitm2/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 rounded-lg card-bg subtle-border hover:border-slate-600 text-slate-300 transition-all">
+                <i class="fa-brands fa-linkedin text-cyan-400"></i> LinkedIn
+            </a>
+            <a href="https://github.com/Amit99100" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 rounded-lg card-bg subtle-border hover:border-slate-600 text-slate-300 transition-all">
+                <i class="fa-brands fa-github text-slate-200"></i> GitHub
+            </a>
+            <a href="https://leetcode.com/u/akm1632456/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 rounded-lg card-bg subtle-border hover:border-slate-600 text-slate-300 transition-all">
+                <i class="fa-solid fa-code text-amber-400"></i> LeetCode <span class="text-slate-400">(600+)</span>
+            </a>
+            <a href="https://www.geeksforgeeks.org/profile/realcoder" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 rounded-lg card-bg subtle-border hover:border-slate-600 text-slate-300 transition-all">
+                <i class="fa-solid fa-laptop-code text-emerald-400"></i> GFG <span class="text-slate-400">(1000+)</span>
+            </a>
+            <a href="mailto:amitmaurya.career@gmail.com" class="flex items-center gap-2 px-3 py-2 rounded-lg card-bg subtle-border hover:border-slate-600 text-slate-300 transition-all">
+                <i class="fa-solid fa-envelope text-cyan-400"></i> Mail
+            </a>
+            <a href="tel:+918239943061" class="flex items-center gap-2 px-3 py-2 rounded-lg card-bg subtle-border hover:border-slate-600 text-slate-300 transition-all">
+                <i class="fa-solid fa-phone text-emerald-400"></i> +91-8239943061
+            </a>
+        </div>
     </section>
 
-    <!-- <div style=" display: flex; justify-content: center;  ">
+    <!-- SYSTEM ARCHITECTURE & IMPACT STATS -->
+    <section id="impact" class="space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-line text-cyan-400"></i> Key Production Metrics & Impact
+                </h2>
+                <p class="text-xs text-slate-400 font-mono">Measurable optimizations across enterprise microservices</p>
+            </div>
+        </div>
 
-        <p>20mm02009@iitbbs.ac.in</p>
-    </div> -->
-
-
-    </section>
-    <!-- about me section ends here  -->
-
-
-
-    <!-- projects  starts here  -->
-
-    <section id="projects">
-        <h2>Projects</h2>
-
-    </section>
-    <!-- projects  Ends here starts here  -->
-
-    <!-- Projecst SEctions  -->
-
-    <section id="projects">
-
-
-        <div id="temp_size" class="project_in_two_group">
-
-        <div class="project" onclick=gotoWeb5()>
-                <img class="project_img" src="./Images/KYI.png" alt="Project 1">
-                <div class="project-content">
-                    <div class="project-title">KNOW YOUR INFLUENCER</div>
-                    <div class="project-description">Empowering you with authentic insights into today’s influencers.
-Your trusted space for genuine influencer reviews and recommendations. </div>
-                    
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Stat 1 -->
+            <div onclick="openMetricModal('mongo')" class="card-bg p-5 rounded-xl subtle-border subtle-border-hover cursor-pointer transition-all group relative">
+                <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                    <span>LATENCY REDUCTION</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square group-hover:text-cyan-400 transition-colors"></i>
                 </div>
-            <div>  <a>https://knowyourinfluencer.com/</a> </div>
+                <div class="text-3xl font-extrabold text-cyan-400 font-mono tracking-tight">97% Drop</div>
+                <div class="text-xs text-slate-300 font-medium mt-1">3.1s → 90ms Query Response</div>
+                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                    Optimized production MongoDB aggregation pipeline using early indexed filter stages & projection prunings.
+                </p>
             </div>
 
-            <div class="project" onclick=gotoWeb4()>
-                <img class="project_img" src="./Images/MY CHAT APP.png" alt="Project 1">
-                <div class="project-content">
-                    <div class="project-title">Web Chat Application</div>
-                    <div class="project-description">Chats Freely With Friends and Family in Group and Alone </div>
+            <!-- Stat 2 -->
+            <div onclick="openMetricModal('prs')" class="card-bg p-5 rounded-xl subtle-border subtle-border-hover cursor-pointer transition-all group">
+                <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                    <span>BITBUCKET COMMITS</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square group-hover:text-cyan-400 transition-colors"></i>
+                </div>
+                <div class="text-3xl font-extrabold text-slate-100 font-mono tracking-tight">730+ PRs</div>
+                <div class="text-xs text-slate-300 font-medium mt-1">20+ Microservice Repositories</div>
+                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                    Built core workflows for CRM modules at Phenom People for enterprise clients worldwide.
+                </p>
+            </div>
+
+            <!-- Stat 3 -->
+            <div onclick="openMetricModal('dsa')" class="card-bg p-5 rounded-xl subtle-border subtle-border-hover cursor-pointer transition-all group">
+                <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                    <span>PROBLEM SOLVING</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square group-hover:text-cyan-400 transition-colors"></i>
+                </div>
+                <div class="text-3xl font-extrabold text-amber-400 font-mono tracking-tight">1600+ Solved</div>
+                <div class="text-xs text-slate-300 font-medium mt-1">LeetCode (600+) & GFG (1000+)</div>
+                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                    Secured Top 2 percentile in JEE 2020 out of 1M+ candidates; strong DSA fundamentals.
+                </p>
+            </div>
+
+            <!-- Stat 4 -->
+            <div onclick="openMetricModal('security')" class="card-bg p-5 rounded-xl subtle-border subtle-border-hover cursor-pointer transition-all group">
+                <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                    <span>SECURITY & FEDRAMP</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square group-hover:text-cyan-400 transition-colors"></i>
+                </div>
+                <div class="text-3xl font-extrabold text-emerald-400 font-mono tracking-tight">100+ Endpoints</div>
+                <div class="text-xs text-slate-300 font-medium mt-1">PII Sanitization & IDOR Remediation</div>
+                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                    Migrated services to Java 17 / Spring Boot 3; enforced tenant JWT validation & context propagation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SYSTEM CODE INSIGHT / TERMINAL SNIPPET -->
+<!--    <section class="card-bg rounded-xl subtle-border overflow-hidden">-->
+<!--        <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center justify-between font-mono text-xs">-->
+<!--            <div class="flex items-center gap-2 text-slate-400">-->
+<!--                <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>-->
+<!--                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>-->
+<!--                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>-->
+<!--                <span class="ml-2 text-slate-300 font-semibold">production-mongo-pipeline-optimization.java</span>-->
+<!--            </div>-->
+<!--            <span class="text-slate-500 text-[11px]">Java 17 • Spring Data MongoDB</span>-->
+<!--        </div>-->
+<!--        <div class="p-4 sm:p-6 font-mono text-xs leading-relaxed overflow-x-auto text-slate-300 bg-slate-950/70">-->
+<!--<pre><code class="language-java"><span class="text-slate-500">// Optimized MongoDB Aggregation Pipeline - Phenom CRM Workflows</span>-->
+<!--<span class="text-slate-500">// Result: Latency reduced from 3,100ms down to 90ms (97% reduction)</span>-->
+
+<!--<span class="text-cyan-400">public</span> AggregationResults&lt;TenantCrmDTO&gt; <span class="text-emerald-400">fetchOptimizedTenantMetrics</span>(String tenantId, Date fromDate) {-->
+<!--    MatchOperation matchTenantAndDate = Aggregation.<span class="text-amber-300">match</span>(-->
+<!--        Criteria.<span class="text-amber-300">where</span>(<span class="text-cyan-300">"tenant_id"</span>).<span class="text-amber-300">is</span>(tenantId)-->
+<!--                .<span class="text-amber-300">and</span>(<span class="text-cyan-300">"created_at"</span>).<span class="text-amber-300">gte</span>(fromDate)  <span class="text-slate-500">// Early indexed stage pruning</span>-->
+<!--    );-->
+
+<!--    ProjectionOperation pruneFields = Aggregation.<span class="text-amber-300">project</span>(<span class="text-cyan-300">"candidate_id"</span>, <span class="text-cyan-300">"stage"</span>, <span class="text-cyan-300">"updated_at"</span>)-->
+<!--            .<span class="text-amber-300">andExclude</span>(<span class="text-cyan-300">"unnecessary_payload_metadata"</span>);  <span class="text-slate-500">// Removing heavy projections</span>-->
+
+<!--    TypedAggregation&lt;CrmRecord&gt; aggregation = Aggregation.<span class="text-amber-300">newAggregation</span>(-->
+<!--        CrmRecord.<span class="text-cyan-400">class</span>,-->
+<!--        matchTenantAndDate,-->
+<!--        pruneFields-->
+<!--    );-->
+
+<!--    <span class="text-cyan-400">return</span> mongoTemplate.<span class="text-emerald-400">aggregate</span>(aggregation, TenantCrmDTO.<span class="text-cyan-400">class</span>);-->
+<!--}</code></pre>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <!-- WORK EXPERIENCE TIMELINE -->
+    <section id="experience" class="space-y-8">
+        <div class="border-b border-slate-800 pb-4">
+            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                <i class="fa-solid fa-briefcase text-cyan-400"></i> Engineering Experience
+            </h2>
+            <p class="text-xs text-slate-400 font-mono">Detailed breakdown of enterprise impact & internship responsibilities</p>
+        </div>
+
+        <div class="space-y-8">
+            <!-- Role 1: Phenom -->
+            <div class="card-bg p-6 sm:p-8 rounded-xl subtle-border space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-lg font-bold text-slate-100">Product Development Engineer I</h3>
+                            <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[11px]">Full Time</span>
+                        </div>
+                        <div class="text-xs text-cyan-400 font-mono mt-1">Phenom People Pvt. Ltd. • Hyderabad, India</div>
+                    </div>
+                    <div class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-md border border-slate-800 self-start md:self-auto">
+                        Jun 2025 – Present
+                    </div>
+                </div>
+
+                <!-- Enterprise Customers Badge list -->
+                <div class="bg-slate-900/70 p-3 rounded-lg border border-slate-800/80 text-xs flex flex-wrap items-center gap-2">
+                    <span class="font-mono text-slate-400 text-[11px]">Enterprise Clients Supported:</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700/50">Walt Disney</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700/50">Maruti Suzuki</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700/50">DHL Group</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700/50">CVS Health</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700/50">United Airlines</span>
+                </div>
+
+                <ul class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed list-disc list-inside">
+                    <li>Developed and maintained enterprise <strong class="text-slate-100">Java / Spring Boot microservices</strong> for CRM workflows across 20+ backend and infrastructure repositories, contributing to <strong class="text-cyan-400 font-mono">730+ Bitbucket PRs/commits</strong>.</li>
+                    <li><strong class="text-slate-100">Database Optimization:</strong> Optimized a production MongoDB aggregation pipeline by applying indexed filtering early and removing redundant projections, cutting query response latency from <strong class="text-cyan-400 font-mono">3.1s down to 90ms (97% reduction)</strong>.</li>
+                    <li><strong class="text-slate-100">Kafka Lag Remediation:</strong> Diagnosed and resolved Kafka consumer lag and processing bottlenecks by tuning consumer batch parameters and acknowledgment behavior in event-driven job workflows.</li>
+                    <li><strong class="text-slate-100">FedRAMP Modernization:</strong> Modernized core microservices for FedRAMP readiness, migrating services to <strong class="text-slate-100">Java 17 / Spring Boot 3</strong>, upgrading legacy dependencies, standardizing tenant context propagation, and sanitizing PII across 100+ REST endpoints.</li>
+                    <li><strong class="text-slate-100">Security Engineering:</strong> Remediated critical IDOR / cross-tenant authorization vulnerabilities by validating tenant and user context from authenticated JWT claims and enforcing server-side tenant isolation.</li>
+                    <li><strong class="text-slate-100">Connection Pool Tuning:</strong> Resolved Redis/Jedis connection-pool exhaustion by fixing connection lifecycle leaks and tuning pool configuration for high concurrency workloads.</li>
+                    <li>Built production features and resolved critical defects for enterprise customers including Walt Disney, Maruti Suzuki, DHL Group, CVS Health, and United Airlines.</li>
+                    <li>Authored Python scripts for production data and config migrations; used containerized deployments with <strong class="text-slate-100">Docker, Kubernetes, Helm, ArgoCD</strong>; applied LLM-assisted coding for specification-driven development, test creation, and code review.</li>
+                </ul>
+
+                <div class="flex flex-wrap gap-2 text-[11px] font-mono text-slate-400 pt-2">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Java 17</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Spring Boot 3</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">MongoDB Aggregations</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Apache Kafka</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Redis/Jedis</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Docker & K8s</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">ArgoCD</span>
                 </div>
             </div>
-  </div>
-        
-        <div id="temp_size" class="project_in_two_group">
 
-            
-            
-            <div class="project" onclick=gotoWeb3()>
-                <img class="project_img" src=" ./Images/PathFinder.png" alt="Project 2">
-                <div class="project-content">
-                    <div class="project-title">Interactive A* Pathfinding Web Application</div>
-                    <div class="project-description">Developed Web App using an A* Pathfinding Algorithm to determine
-                        the most efficient route
-                        between two points within a 2D grid.</div>
+            <!-- Role 2: Electrogati -->
+            <div class="card-bg p-6 sm:p-8 rounded-xl subtle-border space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-lg font-bold text-slate-100">Software Development Intern</h3>
+                            <span class="px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[11px]">Internship</span>
+                        </div>
+                        <div class="text-xs text-purple-400 font-mono mt-1">Electrogati Technologies Pvt. Ltd. • Maharashtra, India</div>
+                    </div>
+                    <div class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-md border border-slate-800 self-start md:self-auto">
+                        May 2024 – Aug 2024
+                    </div>
+                </div>
+
+                <ul class="space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed list-disc list-inside">
+                    <li>Developed a MERN-stack patent-management platform supporting multi-role user/expert workflows, real-time feedback systems, and platform operations.</li>
+                    <li>Implemented robust REST APIs, user authentication, MongoDB data models, dynamic real-time communication via Socket.io, and admin dashboards.</li>
+                </ul>
+
+                <div class="flex flex-wrap gap-2 text-[11px] font-mono text-slate-400 pt-2">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">React.js</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Node.js</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Express</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">MongoDB</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Socket.io</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION & ACHIEVEMENTS SECTION -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Education -->
+        <div class="card-bg p-6 rounded-xl subtle-border space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-graduation-cap text-xl text-cyan-400"></i>
+                    <h3 class="text-base font-bold text-slate-100">Education</h3>
+                </div>
+                <span class="text-xs font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/30">CGPA 7.78 / 10</span>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-semibold text-slate-200 text-sm">Indian Institute of Technology (IIT) Bhubaneswar</h4>
+                <p class="text-xs text-slate-300">B.Tech + M.Tech (Dual Degree), Metallurgical and Materials Engineering</p>
+                <p class="text-xs font-mono text-slate-500">Graduation Year: 2020 – 2025</p>
+            </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="card-bg p-6 rounded-xl subtle-border space-y-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <i class="fa-solid fa-award text-xl text-amber-400"></i>
+                <h3 class="text-base font-bold text-slate-100">Achievements</h3>
+            </div>
+
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+                <li class="flex items-start gap-2.5">
+                    <i class="fa-solid fa-star text-amber-400 mt-1 text-xs"></i>
+                    <span><strong class="text-slate-100">JEE 2020:</strong> Secured Top 2 percentile among 10 Lakh+ candidates nationwide.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                    <i class="fa-solid fa-microchip text-cyan-400 mt-1 text-xs"></i>
+                    <span><strong class="text-slate-100">Prototype Hardware Innovation:</strong> Reduced helmet temperature by 5°C using Phase Change Material (PCM) in real-world test validations.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FEATURED PROJECTS WITH REAL VERIFIED REPO LINKS -->
+    <section id="projects" class="space-y-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open text-cyan-400"></i> Featured Technical Projects
+                </h2>
+                <p class="text-xs text-slate-400 font-mono">Open-source implementations with complete GitHub codebases</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Project 1: Know Your Influencer -->
+            <div class="card-bg p-6 rounded-xl subtle-border subtle-border-hover flex flex-col justify-between group">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-400 border border-slate-700">React • Node • MongoDB</span>
+                        <a href="https://github.com/amitmaurya-/Know-Your-Influencer" target="_blank" rel="noopener" class="text-slate-400 hover:text-cyan-400 text-lg transition-colors" title="View Source Code">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-100 group-hover:text-cyan-400 transition-colors">Know Your Influencer.com</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Community-driven rating and review platform featuring creator profile management, feedback scoring algorithm, and real-time review updates.
+                    </p>
+                    <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 font-mono">
+                        ⚡ Engineered backend workflows & MongoDB data models designed to gracefully handle 1000+ concurrent active users.
+                    </div>
+                </div>
+                <div class="mt-6 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
+                    <a href="https://github.com/amitmaurya-/Know-Your-Influencer" target="_blank" rel="noopener" class="text-cyan-400 font-mono hover:underline flex items-center gap-1">
+                        <span>Repository</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 2: Namaste Connect -->
+            <div class="card-bg p-6 rounded-xl subtle-border subtle-border-hover flex flex-col justify-between group">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-purple-400 border border-slate-700">Socket.io • WebSockets</span>
+                        <a href="https://github.com/amitmaurya-/namaste-connect" target="_blank" rel="noopener" class="text-slate-400 hover:text-purple-400 text-lg transition-colors" title="View Source Code">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-100 group-hover:text-purple-400 transition-colors">Namaste Connect</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Full-duplex real-time communication platform supporting 1-to-1 private messaging, group chat rooms, authentication, and push notifications.
+                    </p>
+                    <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 font-mono">
+                        💬 Utilized Socket.io event-driven listeners combined with persistent conversation storage in MongoDB.
+                    </div>
+                </div>
+                <div class="mt-6 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
+                    <a href="https://github.com/amitmaurya-/namaste-connect" target="_blank" rel="noopener" class="text-purple-400 font-mono hover:underline flex items-center gap-1">
+                        <span>Repository</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 3: Fake News Detection -->
+            <div class="card-bg p-6 rounded-xl subtle-border subtle-border-hover flex flex-col justify-between group">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-emerald-400 border border-slate-700">Python • ML / NLP</span>
+                        <a href="https://github.com/amitmaurya-/Fake-News-Detection" target="_blank" rel="noopener" class="text-slate-400 hover:text-emerald-400 text-lg transition-colors" title="View Source Code">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-100 group-hover:text-emerald-400 transition-colors">Fake News NLP Detection</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Machine learning pipeline classifying news articles as real or fake using natural language processing text cleaning & vectorization.
+                    </p>
+                    <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 font-mono">
+                        🎯 Achieved 90% classification accuracy evaluating Logistic Regression and Decision Tree models via TF-IDF features.
+                    </div>
+                </div>
+                <div class="mt-6 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
+                    <a href="https://github.com/amitmaurya-/Fake-News-Detection" target="_blank" rel="noopener" class="text-emerald-400 font-mono hover:underline flex items-center gap-1">
+                        <span>Repository</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
                 </div>
             </div>
 
         </div>
-        <div class="project_in_two_group">
-            <div class="project" onclick=gotoWeb1()>
-                <img class="project_img" src="./Images/PasswordGenerator.png" alt="Project 1">
-                <div class="project-content">
-                    <div class="project-title">Complex Password Generator</div>
-                    <div class="project-description">Create Best passwords according to your preferences using this
-                        application</div>
-                </div>
-            </div>
-            <div class="project" onclick=gotoWeb()>
-                <img class="project_img" src=" ./Images/Weatherapp.png" alt="Project 2">
-                <div class="project-content">
-                    <div class="project-title">Weather app</div>
-                    <div class="project-description">Retrieve weather data for any city across the globe, including
-                        temperature information and weather conditions.</div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Add more projects as needed -->
     </section>
 
+    <!-- SKILLS & TECHNICAL MATRIX -->
+    <section id="skills" class="space-y-6">
+        <div class="border-b border-slate-800 pb-4">
+            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-cyan-400"></i> Tech Stack & Expertise
+            </h2>
+            <p class="text-xs text-slate-400 font-mono">Core languages, distributed infrastructure, and security tooling</p>
+        </div>
 
-    <footer>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <nav>
-            <ul id="contact">
-                <h4>Contact</h4>
-                <p>amitmaurya.career@gmail.com </p>
-                <br>
-
-                <div id="contact">
-                    <li><a target="_blank" href="https://github.com/Amit99100"><img src="./Images/pngegg.png"
-                                alt="GitHub Logo"></a></li>
-                    <li><a target="_blank" href="https://www.linkedin.com/in/amit-maurya-b969a5246/"><img
-                                src="./Images/linkedin.png" alt=""></a>
-                    </li>
-                    <li><a target="_blank" href="https://x.com/amit_maurya_o"><img
-                                src="https://seeklogo.com/images/T/twitter-x-logo-F7DCE5534C-seeklogo.com.png"
-                                alt=""></a>
-                    </li>
-
+            <div class="card-bg p-5 rounded-xl subtle-border space-y-3">
+                <div class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">Languages & Core</div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Java (17/3)</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">C++</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Python</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">JavaScript</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Bash / SQL</span>
                 </div>
+            </div>
 
-            </ul>
-        </nav>
+            <div class="card-bg p-5 rounded-xl subtle-border space-y-3">
+                <div class="text-xs font-mono text-purple-400 font-semibold uppercase tracking-wider">Backend & Distributed</div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Spring Boot 3</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Microservices</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Apache Kafka</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">REST APIs</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Node.js</span>
+                </div>
+            </div>
+
+            <div class="card-bg p-5 rounded-xl subtle-border space-y-3">
+                <div class="text-xs font-mono text-emerald-400 font-semibold uppercase tracking-wider">Databases & Caching</div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">MongoDB</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Redis / Jedis</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">MySQL</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Query Optimization</span>
+                </div>
+            </div>
+
+            <div class="card-bg p-5 rounded-xl subtle-border space-y-3">
+                <div class="text-xs font-mono text-amber-400 font-semibold uppercase tracking-wider">Cloud & DevOps</div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Docker</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Kubernetes</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Helm</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">ArgoCD</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Linux</span>
+                </div>
+            </div>
+
+            <div class="card-bg p-5 rounded-xl subtle-border space-y-3">
+                <div class="text-xs font-mono text-pink-400 font-semibold uppercase tracking-wider">Security & Auth</div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">JWT Context</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Multi-Tenancy</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">FedRAMP / PII</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">IDOR Remediation</span>
+                </div>
+            </div>
+
+            <div class="card-bg p-5 rounded-xl subtle-border space-y-3">
+                <div class="text-xs font-mono text-cyan-300 font-semibold uppercase tracking-wider">Engineering Practices</div>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-200">
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">LLM-Assisted Coding</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">System Design (HLD/LLD)</span>
+                    <span class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">Git / Bitbucket</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER & DIRECT CONTACT -->
+    <footer class="pt-12 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-6 text-xs font-mono text-slate-400">
+        <div>
+            © 2026 Amit Maurya
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="https://www.linkedin.com/in/amitm2/" target="_blank" rel="noopener" class="hover:text-cyan-400">LinkedIn</a>
+            <a href="https://github.com/Amit99100" target="_blank" rel="noopener" class="hover:text-cyan-400">GitHub</a>
+            <a href="https://leetcode.com/u/akm1632456/" target="_blank" rel="noopener" class="hover:text-cyan-400">LeetCode</a>
+            <a href="mailto:amitmaurya.career@gmail.com" class="hover:text-cyan-400">Email</a>
+        </div>
     </footer>
 
+</main>
 
-    <script src="app.js"></script>
-    <script src="slider.js"></script>
-    <script src="Button.js"></script>
-    <script src="projects.js"></script>
+<!-- METRIC BREAKDOWN MODAL -->
+<div id="metric-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
+    <div class="card-bg max-w-lg w-full rounded-2xl subtle-border p-6 space-y-4 shadow-2xl relative">
+        <button onclick="closeMetricModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+        <h3 id="modal-title" class="text-lg font-bold text-slate-100">Metric Details</h3>
+        <div id="modal-body" class="text-xs text-slate-300 leading-relaxed font-mono space-y-2"></div>
+        <div class="pt-2 text-right">
+            <button onclick="closeMetricModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 font-mono">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- JAVASCRIPT LOGIC -->
+<script>
+    // Copy to clipboard with visual toast
+    function copyToClipboard(text, msg) {
+        const tempInput = document.createElement("input");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        const toast = document.getElementById("toast");
+        const toastMsg = document.getElementById("toast-message");
+        toastMsg.textContent = msg || "Copied to clipboard!";
+        toast.classList.add("show");
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3000);
+    }
+
+    // Metric Modal Details
+    const modalData = {
+        mongo: {
+            title: "⚡ MongoDB Pipeline Optimization (97% Latency Drop)",
+            content: `• Problem: Slow CRM search query execution taking ~3,100ms in production under high load.<br><br>
+                          • Solution: Analyzed query execution plan using MongoDB explain logs. Applied early stage $match filters using indexed fields, pruned heavy $project attributes prior to joining stages.<br><br>
+                          • Result: Reduced latency to 90ms with 0 downtime across 20+ tenant environments.`
+        },
+        prs: {
+            title: "💼 Enterprise Microservices at Phenom People",
+            content: `• Contributed to over 730+ merged pull requests / commits across 20+ backend and infrastructure repositories.<br><br>
+                          • Developed production workflows serving tier-1 enterprise enterprise accounts including Walt Disney, Maruti Suzuki, DHL, CVS Health, and United Airlines.`
+        },
+        dsa: {
+            title: "🧠 Competitive Programming & DSA Mastery",
+            content: `• LeetCode: Solved 600+ medium & hard problems focusing on Graphs, Dynamic Programming, and Concurrency.<br><br>
+                          • GeeksforGeeks: 1000+ problem solutions.<br><br>
+                          • JEE Advanced 2020: Ranked in the Top 2 percentile out of over 10 Lakh candidates.`
+        },
+        security: {
+            title: "🛡️ FedRAMP & Cross-Tenant Security Migration",
+            content: `• Modernized enterprise microservices to Java 17 / Spring Boot 3.<br><br>
+                          • Remediated cross-tenant authorization (IDOR) vulnerabilities by enforcing strict server-side validation of JWT claims and tenant context propagation.<br><br>
+                          • Automated PII data sanitization across 100+ production REST endpoints.`
+        }
+    };
+
+    function openMetricModal(key) {
+        const modal = document.getElementById("metric-modal");
+        const title = document.getElementById("modal-title");
+        const body = document.getElementById("modal-body");
+        if (modalData[key]) {
+            title.innerHTML = modalData[key].title;
+            body.innerHTML = modalData[key].content;
+            modal.classList.remove("hidden");
+        }
+    }
+
+    function closeMetricModal() {
+        document.getElementById("metric-modal").classList.add("hidden");
+    }
+</script>
 </body>
-
 </html>
