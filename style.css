@@ -208,7 +208,7 @@ git hubb log  */
 
 .resume-item {
   flex: 1;
-  background-color: #fff; /* White background for each item */
+  /*background-color: #fff; !* White background for each item *!*/
   border: 1px solid #ddd; /* Light gray border */
   border-radius: 8px; /* Rounded corners */
   margin: 1rem;
